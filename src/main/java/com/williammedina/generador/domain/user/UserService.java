@@ -4,33 +4,25 @@ import com.williammedina.generador.domain.user.dto.LoginDTO;
 import com.williammedina.generador.domain.user.dto.UserDTO;
 import com.williammedina.generador.infrastructure.security.JwtTokenResponse;
 import com.williammedina.generador.infrastructure.security.TokenService;
-import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(
-            UserRepository userRepository,
             TokenService tokenService,
-            AuthenticationManager authenticationManager,
-            BCryptPasswordEncoder passwordEncoder
+            AuthenticationManager authenticationManager
     ) {
-        this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional

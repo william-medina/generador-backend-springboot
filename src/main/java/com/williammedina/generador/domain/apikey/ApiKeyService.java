@@ -4,7 +4,8 @@ import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
 import com.williammedina.generador.domain.user.User;
-import com.williammedina.generador.infrastructure.errors.AppException;
+import com.williammedina.generador.infrastructure.exception.AppException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -64,12 +65,12 @@ public class ApiKeyService {
 
     public ApiKey findApiKeyById(Long id) {
         return apiKeyRepository.findById(id)
-                .orElseThrow(() -> new AppException("Api Key no encontrada", "NOT_FOUND"));
+                .orElseThrow(() -> new AppException("Api Key no encontrada", HttpStatus.NOT_FOUND));
     }
 
     private void checkModificationPermission(ApiKey apiKey) {
         if (!apiKey.getUser().equals(getAuthenticatedUser())) {
-            throw new AppException("No tienes permiso para realizar esta acción", "FORBIDDEN");
+            throw new AppException("No tienes permiso para realizar esta acción", HttpStatus.FORBIDDEN);
         }
     }
 

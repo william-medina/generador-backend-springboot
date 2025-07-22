@@ -3,7 +3,8 @@ package com.williammedina.generador.domain.sensor;
 import com.williammedina.generador.domain.apikey.ApiKeyRepository;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
-import com.williammedina.generador.infrastructure.errors.AppException;
+import com.williammedina.generador.infrastructure.exception.AppException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,7 @@ public class SensorService {
 
     private void validateApiKey(String apiKey) {
         apiKeyRepository.findByKeyAndIsActive(apiKey, true)
-                .orElseThrow(() -> new AppException("Invalid or inactive API Key", "FORBIDDEN"));
+                .orElseThrow(() -> new AppException("Invalid or inactive API Key", HttpStatus.FORBIDDEN));
     }
 
     public SensorDTO toSensorDTO(Sensor sensor) {

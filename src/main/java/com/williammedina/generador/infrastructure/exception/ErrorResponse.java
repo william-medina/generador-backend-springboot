@@ -1,4 +1,4 @@
-package com.williammedina.generador.infrastructure.errors;
+package com.williammedina.generador.infrastructure.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

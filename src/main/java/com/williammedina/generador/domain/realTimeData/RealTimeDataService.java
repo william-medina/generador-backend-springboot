@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.williammedina.generador.domain.apikey.ApiKeyRepository;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataDTO;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataInputDTO;
-import com.williammedina.generador.infrastructure.errors.AppException;
+import com.williammedina.generador.infrastructure.exception.AppException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class RealTimeDataService {
 
     private void validateApiKey(String apiKey) {
         apiKeyRepository.findByKeyAndIsActive(apiKey, true)
-                .orElseThrow(() -> new AppException("Invalid or inactive API Key", "FORBIDDEN"));
+                .orElseThrow(() -> new AppException("Invalid or inactive API Key", HttpStatus.FORBIDDEN));
     }
 
     public RealTimeDataDTO toRealTimeDataDTO(RealTimeData data) {

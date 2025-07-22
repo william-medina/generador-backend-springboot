@@ -5,7 +5,7 @@ import com.williammedina.generador.domain.apikey.ApiKeyService;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
-import com.williammedina.generador.infrastructure.errors.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

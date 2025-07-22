@@ -3,7 +3,7 @@ package com.williammedina.generador.controller;
 import com.williammedina.generador.domain.realTimeData.RealTimeDataService;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataDTO;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataInputDTO;
-import com.williammedina.generador.infrastructure.errors.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

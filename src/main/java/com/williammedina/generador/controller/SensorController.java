@@ -1,13 +1,9 @@
 package com.williammedina.generador.controller;
 
-import com.williammedina.generador.domain.apikey.ApiKeyRepository;
-import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
-import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
-import com.williammedina.generador.domain.sensor.SensorRepository;
 import com.williammedina.generador.domain.sensor.SensorService;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
-import com.williammedina.generador.infrastructure.errors.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

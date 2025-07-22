@@ -3,7 +3,7 @@ package com.williammedina.generador.controller;
 import com.williammedina.generador.domain.user.UserService;
 import com.williammedina.generador.domain.user.dto.LoginDTO;
 import com.williammedina.generador.domain.user.dto.UserDTO;
-import com.williammedina.generador.infrastructure.errors.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ErrorResponse;
 import com.williammedina.generador.infrastructure.security.JwtTokenResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
