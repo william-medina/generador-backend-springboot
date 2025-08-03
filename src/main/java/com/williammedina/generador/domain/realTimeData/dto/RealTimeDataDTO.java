@@ -1,5 +1,6 @@
 package com.williammedina.generador.domain.realTimeData.dto;
 
+import com.williammedina.generador.domain.realTimeData.RealTimeData;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "DTO for retrieving real-time data from the generator")
@@ -29,4 +30,17 @@ public record RealTimeDataDTO(
         @Schema(description = "Timestamp of the last event", example = "2025-08-02 11:20:00")
         String date
 ) {
+        public static RealTimeDataDTO fromEntity(RealTimeData data) {
+                return new RealTimeDataDTO(
+                        data.getEvent(),
+                        data.getNetworkVoltage(),
+                        data.getGeneratorVoltage(),
+                        data.getContactor1(),
+                        data.getContactor2(),
+                        data.getBatteryVoltage(),
+                        data.getFuelLevel(),
+                        data.getDate()
+                );
+        }
+
 }

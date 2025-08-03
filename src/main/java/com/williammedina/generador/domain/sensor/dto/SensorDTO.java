@@ -1,8 +1,9 @@
 package com.williammedina.generador.domain.sensor.dto;
 
+import com.williammedina.generador.domain.sensor.Sensor;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "DTO que representa los datos de los sensores almacenados por evento")
+@Schema(description = "DTO representing sensor data stored per event")
 public record SensorDTO(
 
         @Schema(description = "Sensor event log ID", example = "101")
@@ -32,4 +33,18 @@ public record SensorDTO(
         @Schema(description = "Date and time of the record", example = "2025-08-02 11:00:00")
         String date
 ) {
+
+        public static SensorDTO fromEntity(Sensor sensor) {
+                return new SensorDTO(
+                        sensor.getId(),
+                        sensor.getEvent(),
+                        sensor.getNetworkVoltage(),
+                        sensor.getGeneratorVoltage(),
+                        sensor.getContactor1(),
+                        sensor.getContactor2(),
+                        sensor.getBatteryVoltage(),
+                        sensor.getFuelLevel(),
+                        sensor.getDate()
+                );
+        }
 }

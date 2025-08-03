@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "DTO utilizado para enviar nuevos datos de los sensores por evento")
+@Schema(description = "DTO used to send new sensor data by event")
 public record SensorInputDTO(
 
         @Schema(description = "Event that triggered the record", example = "Perdida de energia")

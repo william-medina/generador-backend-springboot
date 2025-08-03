@@ -5,6 +5,7 @@ import com.williammedina.generador.domain.apikey.ApiKeyRepository;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataDTO;
 import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataInputDTO;
 import com.williammedina.generador.infrastructure.exception.AppException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-
+@Slf4j
 @Service
 public class RealTimeDataService {
 
@@ -30,6 +31,7 @@ public class RealTimeDataService {
         // Crear archivo/directorio si no existen
         Files.createDirectories(jsonPath.getParent());
         if (Files.notExists(jsonPath)) {
+            log.info("JSON file not found. Creating new file at: {}", jsonPath);
             Files.createFile(jsonPath);
             Files.writeString(jsonPath, "{}");
         }
@@ -59,12 +61,13 @@ public class RealTimeDataService {
         String updatedJsonString = objectMapper.writeValueAsString(existingData);
         Files.writeString(jsonPath, updatedJsonString);
 
-        return toRealTimeDataDTO(existingData);
+        return RealTimeDataDTO.fromEntity(existingData);
     }
 
     public RealTimeDataDTO getRealTimeData() throws IOException {
 
         if (Files.notExists(jsonPath)) {
+            log.error("JSON file not found at path: {}", jsonPath);
             throw new IOException("File not found: " + jsonPath.toString());
         }
 
@@ -74,24 +77,14 @@ public class RealTimeDataService {
 
         RealTimeData data = objectMapper.readValue(jsonContent, RealTimeData.class);
 
-        return toRealTimeDataDTO(data);
+        return RealTimeDataDTO.fromEntity(data);
     }
 
     private void validateApiKey(String apiKey) {
         apiKeyRepository.findByKeyAndIsActive(apiKey, true)
-                .orElseThrow(() -> new AppException("Invalid or inactive API Key", HttpStatus.FORBIDDEN));
-    }
-
-    public RealTimeDataDTO toRealTimeDataDTO(RealTimeData data) {
-        return new RealTimeDataDTO(
-                data.getEvent(),
-                data.getNetworkVoltage(),
-                data.getGeneratorVoltage(),
-                data.getContactor1(),
-                data.getContactor2(),
-                data.getBatteryVoltage(),
-                data.getFuelLevel(),
-                data.getDate()
-        );
+                .orElseThrow(() -> {
+                    log.warn("API key validation failed: {}", apiKey);
+                    return new AppException("Invalid or inactive API Key", HttpStatus.FORBIDDEN);
+                });
     }
 }
