@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -55,10 +56,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             var token = authHeader.replace("Bearer ", "");
 
             try{
-                var username = tokenService.getSubjectFromToken(token);
-                if (username != null) {
+                var email = tokenService.getSubjectFromToken(token);
+                if (email != null) {
                     // Token valido
-                    var user = userRepository.findByEmail(username);
+                    var user = userRepository.findByEmail(email)
+                            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
                     var authentication = new UsernamePasswordAuthenticationToken(user, null,
                             user.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
