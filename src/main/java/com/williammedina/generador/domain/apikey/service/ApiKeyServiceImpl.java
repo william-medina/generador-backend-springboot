@@ -1,10 +1,13 @@
-package com.williammedina.generador.domain.apikey;
+package com.williammedina.generador.domain.apikey.service;
 
 import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
-import com.williammedina.generador.domain.user.User;
+import com.williammedina.generador.domain.apikey.entity.ApiKey;
+import com.williammedina.generador.domain.apikey.repository.ApiKeyRepository;
+import com.williammedina.generador.domain.user.entity.User;
 import com.williammedina.generador.infrastructure.exception.AppException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -16,14 +19,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ApiKeyService {
+@AllArgsConstructor
+public class ApiKeyServiceImpl implements ApiKeyService{
 
     private final ApiKeyRepository apiKeyRepository;
 
-    public ApiKeyService(ApiKeyRepository apiKeyRepository) {
-        this.apiKeyRepository = apiKeyRepository;
-    }
-
+    @Override
     @Transactional
     public ApiKeyDTO createApiKey(ApiKeyInputDTO data) {
         User user = getAuthenticatedUser();
@@ -35,6 +36,7 @@ public class ApiKeyService {
         return ApiKeyDTO.fromCreatedEntity(apiKey);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<ApiKeyDTO> getAllApiKeys() {
         User user = getAuthenticatedUser();
@@ -43,6 +45,7 @@ public class ApiKeyService {
         return apiKeys.stream().map(ApiKeyDTO::fromEntity).toList();
     }
 
+    @Override
     @Transactional
     public void deleteApiKey(Long id) {
         User user = getAuthenticatedUser();
@@ -53,6 +56,7 @@ public class ApiKeyService {
         log.info("API key with ID: {} deleted successfully by user ID: {}.", id, user.getId());
     }
 
+    @Override
     @Transactional
     public ApiKeyStatusDTO toggleApiKey(Long id) {
         User user = getAuthenticatedUser();

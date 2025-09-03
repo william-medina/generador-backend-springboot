@@ -1,6 +1,6 @@
-package com.williammedina.generador.domain.user;
+package com.williammedina.generador.domain.user.entity;
 
-import com.williammedina.generador.domain.apikey.ApiKey;
+import com.williammedina.generador.domain.apikey.entity.ApiKey;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

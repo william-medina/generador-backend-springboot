@@ -1,9 +1,11 @@
-package com.williammedina.generador.domain.user;
+package com.williammedina.generador.domain.user.service;
 
 import com.williammedina.generador.domain.user.dto.LoginDTO;
 import com.williammedina.generador.domain.user.dto.UserDTO;
+import com.williammedina.generador.domain.user.entity.User;
 import com.williammedina.generador.infrastructure.security.JwtTokenResponse;
 import com.williammedina.generador.infrastructure.security.TokenService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,19 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-public class UserService {
+@AllArgsConstructor
+public class UserServiceImpl implements UserService {
 
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
 
-    public UserService(
-            TokenService tokenService,
-            AuthenticationManager authenticationManager
-    ) {
-        this.tokenService = tokenService;
-        this.authenticationManager = authenticationManager;
-    }
 
+    @Override
     @Transactional
     public JwtTokenResponse login(LoginDTO data) {
         log.info("Attempting to authenticate user: {}", data.email());
@@ -40,6 +37,7 @@ public class UserService {
         return new JwtTokenResponse(jwtToken);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public UserDTO getCurrentUser() {
         User user = getAuthenticatedUser();

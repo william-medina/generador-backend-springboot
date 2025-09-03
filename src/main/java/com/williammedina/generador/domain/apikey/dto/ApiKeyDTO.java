@@ -1,6 +1,6 @@
 package com.williammedina.generador.domain.apikey.dto;
 
-import com.williammedina.generador.domain.apikey.ApiKey;
+import com.williammedina.generador.domain.apikey.entity.ApiKey;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;

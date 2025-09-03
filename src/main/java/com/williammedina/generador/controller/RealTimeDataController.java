@@ -1,8 +1,8 @@
 package com.williammedina.generador.controller;
 
-import com.williammedina.generador.domain.realTimeData.RealTimeDataService;
-import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataDTO;
-import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataInputDTO;
+import com.williammedina.generador.domain.realtimedata.service.RealTimeDataService;
+import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataDTO;
+import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataInputDTO;
 import com.williammedina.generador.infrastructure.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping(value = "/data", produces = "application/json")
 @Tag(name = "Real Time Data", description = "Endpoints for handling real-time data.")
+@AllArgsConstructor
 public class RealTimeDataController {
 
     private final RealTimeDataService realTimeDataService;
-
-    public RealTimeDataController(RealTimeDataService realTimeDataService) {
-        this.realTimeDataService = realTimeDataService;
-    }
 
     @Operation(
             summary = "Save real-time data",

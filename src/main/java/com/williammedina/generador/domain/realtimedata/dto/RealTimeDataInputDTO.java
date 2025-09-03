@@ -1,4 +1,4 @@
-package com.williammedina.generador.domain.realTimeData.dto;
+package com.williammedina.generador.domain.realtimedata.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -1,9 +1,12 @@
-package com.williammedina.generador.domain.sensor;
+package com.williammedina.generador.domain.sensor.service;
 
-import com.williammedina.generador.domain.apikey.ApiKeyRepository;
+import com.williammedina.generador.domain.apikey.repository.ApiKeyRepository;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
+import com.williammedina.generador.domain.sensor.entity.Sensor;
+import com.williammedina.generador.domain.sensor.repository.SensorRepository;
 import com.williammedina.generador.infrastructure.exception.AppException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,16 +16,13 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class SensorService {
+@AllArgsConstructor
+public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
     private final ApiKeyRepository apiKeyRepository;
 
-    public SensorService(SensorRepository sensorRepository, ApiKeyRepository apiKeyRepository) {
-        this.sensorRepository = sensorRepository;
-        this.apiKeyRepository = apiKeyRepository;
-    }
-
+    @Override
     @Transactional(readOnly = true)
     public List<SensorDTO> getAllSensors() {
         log.debug("Retrieving all sensor records ordered by date");
@@ -30,6 +30,7 @@ public class SensorService {
         return sensors.stream().map(SensorDTO::fromEntity).toList();
     }
 
+    @Override
     @Transactional
     public SensorDTO saveSensor(SensorInputDTO data, String apiKey) {
         log.info("Saving new sensors data by event with provided API key");

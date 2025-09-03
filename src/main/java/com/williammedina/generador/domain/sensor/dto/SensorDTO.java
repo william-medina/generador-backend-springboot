@@ -1,6 +1,6 @@
 package com.williammedina.generador.domain.sensor.dto;
 
-import com.williammedina.generador.domain.sensor.Sensor;
+import com.williammedina.generador.domain.sensor.entity.Sensor;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "DTO representing sensor data stored per event")

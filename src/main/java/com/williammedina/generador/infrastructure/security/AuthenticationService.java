@@ -1,6 +1,6 @@
 package com.williammedina.generador.infrastructure.security;
 
-import com.williammedina.generador.domain.user.UserRepository;
+import com.williammedina.generador.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

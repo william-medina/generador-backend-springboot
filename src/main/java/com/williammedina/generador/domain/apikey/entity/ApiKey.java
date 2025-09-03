@@ -1,6 +1,6 @@
-package com.williammedina.generador.domain.apikey;
+package com.williammedina.generador.domain.apikey.entity;
 
-import com.williammedina.generador.domain.user.User;
+import com.williammedina.generador.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.UUID;
 
 @Entity
 @Table(name = "api_keys")

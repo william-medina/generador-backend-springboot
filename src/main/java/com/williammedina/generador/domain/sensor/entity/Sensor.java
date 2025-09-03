@@ -1,4 +1,4 @@
-package com.williammedina.generador.domain.sensor;
+package com.williammedina.generador.domain.sensor.entity;
 
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
 import jakarta.persistence.*;

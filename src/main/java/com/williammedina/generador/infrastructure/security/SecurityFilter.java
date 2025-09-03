@@ -1,7 +1,7 @@
 package com.williammedina.generador.infrastructure.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.williammedina.generador.domain.user.UserRepository;
+import com.williammedina.generador.domain.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

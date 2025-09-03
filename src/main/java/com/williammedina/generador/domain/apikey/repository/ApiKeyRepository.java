@@ -1,6 +1,7 @@
-package com.williammedina.generador.domain.apikey;
+package com.williammedina.generador.domain.apikey.repository;
 
-import com.williammedina.generador.domain.user.User;
+import com.williammedina.generador.domain.apikey.entity.ApiKey;
+import com.williammedina.generador.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

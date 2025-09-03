@@ -1,6 +1,6 @@
 package com.williammedina.generador.controller;
 
-import com.williammedina.generador.domain.sensor.SensorService;
+import com.williammedina.generador.domain.sensor.service.SensorService;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
 import com.williammedina.generador.infrastructure.exception.ErrorResponse;
@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/sensors", produces = "application/json")
 @Tag(name = "Sensors", description = "Endpoints for managing sensors data.")
+@AllArgsConstructor
 public class SensorController {
 
     private final SensorService sensorService;
-
-    public SensorController(SensorService sensorService) {
-        this.sensorService = sensorService;
-    }
 
     @Operation(
             summary = "Save sensors",

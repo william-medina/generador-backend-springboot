@@ -1,6 +1,6 @@
-package com.williammedina.generador.domain.realTimeData.dto;
+package com.williammedina.generador.domain.realtimedata.dto;
 
-import com.williammedina.generador.domain.realTimeData.RealTimeData;
+import com.williammedina.generador.domain.realtimedata.model.RealTimeData;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "DTO for retrieving real-time data from the generator")

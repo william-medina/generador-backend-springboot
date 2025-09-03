@@ -1,4 +1,4 @@
-package com.williammedina.generador.domain.realTimeData;
+package com.williammedina.generador.domain.realtimedata.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

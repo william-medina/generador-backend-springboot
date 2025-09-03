@@ -1,10 +1,12 @@
-package com.williammedina.generador.domain.realTimeData;
+package com.williammedina.generador.domain.realtimedata.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.williammedina.generador.domain.apikey.ApiKeyRepository;
-import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataDTO;
-import com.williammedina.generador.domain.realTimeData.dto.RealTimeDataInputDTO;
+import com.williammedina.generador.domain.apikey.repository.ApiKeyRepository;
+import com.williammedina.generador.domain.realtimedata.model.RealTimeData;
+import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataDTO;
+import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataInputDTO;
 import com.williammedina.generador.infrastructure.exception.AppException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,15 +17,13 @@ import java.nio.file.Path;
 
 @Slf4j
 @Service
-public class RealTimeDataService {
+@AllArgsConstructor
+public class RealTimeDataServiceImpl implements RealTimeDataService{
 
     private final ApiKeyRepository apiKeyRepository;
     private final Path jsonPath = Path.of("data/real_time_data.json");
 
-    public RealTimeDataService(ApiKeyRepository apiKeyRepository) {
-        this.apiKeyRepository = apiKeyRepository;
-    }
-
+    @Override
     public RealTimeDataDTO saveRealTimeData(RealTimeDataInputDTO data, String apiKey) throws IOException {
 
         validateApiKey(apiKey);
@@ -64,6 +64,7 @@ public class RealTimeDataService {
         return RealTimeDataDTO.fromEntity(existingData);
     }
 
+    @Override
     public RealTimeDataDTO getRealTimeData() throws IOException {
 
         if (Files.notExists(jsonPath)) {

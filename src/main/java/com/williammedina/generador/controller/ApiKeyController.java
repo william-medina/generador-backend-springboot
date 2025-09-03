@@ -1,7 +1,7 @@
 package com.williammedina.generador.controller;
 
 
-import com.williammedina.generador.domain.apikey.ApiKeyService;
+import com.williammedina.generador.domain.apikey.service.ApiKeyService;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +23,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api-keys", produces = "application/json")
 @Tag(name = "Api Keys", description = "Endpoints for managing API keys.")
+@AllArgsConstructor
 public class ApiKeyController {
 
     private final ApiKeyService apiKeyService;
-
-    public ApiKeyController(ApiKeyService apiKeyService) {
-        this.apiKeyService = apiKeyService;
-    }
 
     @Operation(
             summary = "Create a new API key",
