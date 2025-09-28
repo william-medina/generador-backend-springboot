@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity
+@Entity(name = "Sensor")
 @Table(name = "sensors")
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Sensor {
+public class SensorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,7 @@ public class Sensor {
     @Column(name = "date")
     private LocalDateTime date;
 
-    public Sensor(
+    public SensorEntity(
             String event,
             Double networkVoltage,
             Double generatorVoltage,
@@ -70,8 +70,8 @@ public class Sensor {
         return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public static Sensor fromInputDTO(SensorInputDTO data) {
-        return new Sensor(
+    public static SensorEntity fromInputDTO(SensorInputDTO data) {
+        return new SensorEntity(
                 data.event(),
                 data.network_voltage(),
                 data.generator_voltage(),

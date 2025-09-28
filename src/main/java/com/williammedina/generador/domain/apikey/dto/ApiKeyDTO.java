@@ -1,6 +1,6 @@
 package com.williammedina.generador.domain.apikey.dto;
 
-import com.williammedina.generador.domain.apikey.entity.ApiKey;
+import com.williammedina.generador.domain.apikey.entity.ApiKeyEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public record ApiKeyDTO(
         LocalDateTime created_at
 ) {
         // Mostrar API key completa solo al crearla
-        public static ApiKeyDTO fromCreatedEntity(ApiKey apiKey) {
+        public static ApiKeyDTO fromCreatedEntity(ApiKeyEntity apiKey) {
                 return new ApiKeyDTO(
                         apiKey.getId(),
                         apiKey.getName(),
@@ -35,7 +35,7 @@ public record ApiKeyDTO(
         }
 
         // Mostrar API key enmascarada al consultarla
-        public static ApiKeyDTO fromEntity(ApiKey apiKey) {
+        public static ApiKeyDTO fromEntity(ApiKeyEntity apiKey) {
                 String key = apiKey.getKey();
 
                 key = key.substring(0, 4) + "..." + key.substring(key.length() - 3);

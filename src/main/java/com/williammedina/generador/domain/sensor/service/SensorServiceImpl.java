@@ -3,7 +3,7 @@ package com.williammedina.generador.domain.sensor.service;
 import com.williammedina.generador.domain.apikey.repository.ApiKeyRepository;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
-import com.williammedina.generador.domain.sensor.entity.Sensor;
+import com.williammedina.generador.domain.sensor.entity.SensorEntity;
 import com.williammedina.generador.domain.sensor.repository.SensorRepository;
 import com.williammedina.generador.infrastructure.exception.AppException;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class SensorServiceImpl implements SensorService {
     @Transactional(readOnly = true)
     public List<SensorDTO> getAllSensors() {
         log.debug("Retrieving all sensor records ordered by date");
-        List<Sensor> sensors = sensorRepository.findAllByOrderByDateDesc();
+        List<SensorEntity> sensors = sensorRepository.findAllByOrderByDateDesc();
         return sensors.stream().map(SensorDTO::fromEntity).toList();
     }
 
@@ -37,8 +37,8 @@ public class SensorServiceImpl implements SensorService {
 
         validateApiKey(apiKey);
 
-        Sensor sensor = Sensor.fromInputDTO(data);
-        Sensor savedSensor = sensorRepository.save(sensor);
+        SensorEntity sensor = SensorEntity.fromInputDTO(data);
+        SensorEntity savedSensor = sensorRepository.save(sensor);
         log.info("Sensors data saved by event with ID: {}", savedSensor.getId());
 
         return SensorDTO.fromEntity(savedSensor);

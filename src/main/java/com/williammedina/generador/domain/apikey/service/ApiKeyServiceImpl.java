@@ -3,9 +3,9 @@ package com.williammedina.generador.domain.apikey.service;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
-import com.williammedina.generador.domain.apikey.entity.ApiKey;
+import com.williammedina.generador.domain.apikey.entity.ApiKeyEntity;
 import com.williammedina.generador.domain.apikey.repository.ApiKeyRepository;
-import com.williammedina.generador.domain.user.entity.User;
+import com.williammedina.generador.domain.user.entity.UserEntity;
 import com.williammedina.generador.infrastructure.exception.AppException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,9 @@ public class ApiKeyServiceImpl implements ApiKeyService{
     @Override
     @Transactional
     public ApiKeyDTO createApiKey(ApiKeyInputDTO data) {
-        User user = getAuthenticatedUser();
+        UserEntity user = getAuthenticatedUser();
         log.info("Creating API key for user ID: {}", user.getId());
-        ApiKey apiKey = new ApiKey(data.name(), user);
+        ApiKeyEntity apiKey = new ApiKeyEntity(data.name(), user);
         apiKeyRepository.save(apiKey);
 
         log.info("API key created with ID: {} for user ID: {}", apiKey.getId(), user.getId());
@@ -39,18 +39,18 @@ public class ApiKeyServiceImpl implements ApiKeyService{
     @Override
     @Transactional(readOnly = true)
     public List<ApiKeyDTO> getAllApiKeys() {
-        User user = getAuthenticatedUser();
+        UserEntity user = getAuthenticatedUser();
         log.debug("Fetching all API keys for user ID: {}", user.getId());
-        List<ApiKey> apiKeys = apiKeyRepository.findByUser(user);
+        List<ApiKeyEntity> apiKeys = apiKeyRepository.findByUser(user);
         return apiKeys.stream().map(ApiKeyDTO::fromEntity).toList();
     }
 
     @Override
     @Transactional
     public void deleteApiKey(Long id) {
-        User user = getAuthenticatedUser();
+        UserEntity user = getAuthenticatedUser();
         log.info("Attempting to delete API key with ID: {} by user ID: {}", id, user.getId());
-        ApiKey apiKey = findApiKeyById(id);
+        ApiKeyEntity apiKey = findApiKeyById(id);
         checkModificationPermission(apiKey);
         apiKeyRepository.delete(apiKey);
         log.info("API key with ID: {} deleted successfully by user ID: {}.", id, user.getId());
@@ -59,9 +59,9 @@ public class ApiKeyServiceImpl implements ApiKeyService{
     @Override
     @Transactional
     public ApiKeyStatusDTO toggleApiKey(Long id) {
-        User user = getAuthenticatedUser();
+        UserEntity user = getAuthenticatedUser();
         log.info("Toggling API key status for ID: {} by user ID: {}", id, user.getId());
-        ApiKey apiKey = findApiKeyById(id);
+        ApiKeyEntity apiKey = findApiKeyById(id);
         checkModificationPermission(apiKey);
         apiKey.setActive(!apiKey.isActive());
         apiKeyRepository.save(apiKey);
@@ -69,18 +69,18 @@ public class ApiKeyServiceImpl implements ApiKeyService{
         return new ApiKeyStatusDTO(apiKey.isActive());
     }
 
-    public User getAuthenticatedUser() {
+    public UserEntity getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication.getPrincipal() instanceof User) {
-            return (User) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserEntity) {
+            return (UserEntity) authentication.getPrincipal();
         }
 
         log.error("Failed to retrieve a valid authenticated user");
         throw new IllegalStateException("El usuario autenticado no es válido.");
     }
 
-    public ApiKey findApiKeyById(Long id) {
+    public ApiKeyEntity findApiKeyById(Long id) {
         return apiKeyRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("API key not found with ID: {}", id);
@@ -88,7 +88,7 @@ public class ApiKeyServiceImpl implements ApiKeyService{
                 });
     }
 
-    private void checkModificationPermission(ApiKey apiKey) {
+    private void checkModificationPermission(ApiKeyEntity apiKey) {
         if (!apiKey.getUser().equals(getAuthenticatedUser())) {
             log.warn("User is not authorized to modify this API key.");
             throw new AppException("No tienes permiso para realizar esta acción", HttpStatus.FORBIDDEN);

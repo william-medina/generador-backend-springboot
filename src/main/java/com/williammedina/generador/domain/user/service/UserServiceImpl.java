@@ -2,7 +2,7 @@ package com.williammedina.generador.domain.user.service;
 
 import com.williammedina.generador.domain.user.dto.LoginDTO;
 import com.williammedina.generador.domain.user.dto.UserDTO;
-import com.williammedina.generador.domain.user.entity.User;
+import com.williammedina.generador.domain.user.entity.UserEntity;
 import com.williammedina.generador.infrastructure.security.JwtTokenResponse;
 import com.williammedina.generador.infrastructure.security.TokenService;
 import lombok.AllArgsConstructor;
@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         Authentication authenticatedUser = authenticationManager.authenticate(authenticationToken);
-        String jwtToken = tokenService.generateToken((User) authenticatedUser.getPrincipal());
-        User user = (User) authenticatedUser.getPrincipal();
+        String jwtToken = tokenService.generateToken((UserEntity) authenticatedUser.getPrincipal());
+        UserEntity user = (UserEntity) authenticatedUser.getPrincipal();
         log.info("User authenticated successfully. ID: {}", user.getId());
 
         return new JwtTokenResponse(jwtToken);
@@ -40,16 +40,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDTO getCurrentUser() {
-        User user = getAuthenticatedUser();
+        UserEntity user = getAuthenticatedUser();
         log.debug("Retrieving user data. ID: {}", user.getId());
         return UserDTO.fromEntity(user);
     }
 
-    public User getAuthenticatedUser() {
+    public UserEntity getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication.getPrincipal() instanceof User) {
-            return (User) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserEntity) {
+            return (UserEntity) authentication.getPrincipal();
         }
 
         log.error("Failed to retrieve a valid authenticated user");

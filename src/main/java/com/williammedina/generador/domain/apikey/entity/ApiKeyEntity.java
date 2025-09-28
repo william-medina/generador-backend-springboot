@@ -1,6 +1,6 @@
 package com.williammedina.generador.domain.apikey.entity;
 
-import com.williammedina.generador.domain.user.entity.User;
+import com.williammedina.generador.domain.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +10,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
-@Entity
+@Entity(name = "ApiKey")
 @Table(name = "api_keys")
 @Getter
 @Setter
@@ -18,7 +18,7 @@ import java.util.Base64;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = "id")
-public class ApiKey {
+public class ApiKeyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class ApiKey {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true, foreignKey = @ForeignKey(name = "api_keys_user_id_foreign"))
-    private User user;
+    private UserEntity user;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
@@ -45,7 +45,7 @@ public class ApiKey {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public ApiKey(String name, User user) {
+    public ApiKeyEntity(String name, UserEntity user) {
         this.name = name;
         this.user = user;
         this.key = generateApiKey();
