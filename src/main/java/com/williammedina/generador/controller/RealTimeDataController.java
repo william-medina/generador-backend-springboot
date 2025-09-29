@@ -3,7 +3,7 @@ package com.williammedina.generador.controller;
 import com.williammedina.generador.domain.realtimedata.service.RealTimeDataService;
 import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataDTO;
 import com.williammedina.generador.domain.realtimedata.dto.RealTimeDataInputDTO;
-import com.williammedina.generador.infrastructure.exception.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,8 +30,8 @@ public class RealTimeDataController {
             description = "Saves the provided real-time data for monitoring purposes. Requires an active API key.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Real-time data saved successfully"),
-                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                    @ApiResponse(responseCode = "403", description = "Invalid or inactive API key", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+                    @ApiResponse(responseCode = "403", description = "Invalid or inactive API key", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @PostMapping("/{api_key}")
@@ -45,7 +45,7 @@ public class RealTimeDataController {
             description = "Retrieves the latest saved real-time data.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Real-time data retrieved successfully"),
-                    @ApiResponse(responseCode = "404", description = "Real-time data not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "404", description = "Real-time data not found", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @GetMapping

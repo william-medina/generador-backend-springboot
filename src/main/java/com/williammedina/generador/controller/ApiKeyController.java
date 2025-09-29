@@ -5,7 +5,7 @@ import com.williammedina.generador.domain.apikey.service.ApiKeyService;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyInputDTO;
 import com.williammedina.generador.domain.apikey.dto.ApiKeyStatusDTO;
-import com.williammedina.generador.infrastructure.exception.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,7 +34,7 @@ public class ApiKeyController {
             security = @SecurityRequirement(name = "bearer-key"),
             responses = {
                     @ApiResponse(responseCode = "201", description = "API key created successfully", content = @Content(schema = @Schema(implementation = ApiKeyDTO.class))),
-                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @PostMapping
@@ -49,7 +49,7 @@ public class ApiKeyController {
             security = @SecurityRequirement(name = "bearer-key"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "API keys retrieved successfully", content = @Content(schema = @Schema(implementation = ApiKeyDTO.class))),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @GetMapping
@@ -65,8 +65,8 @@ public class ApiKeyController {
             security = @SecurityRequirement(name = "bearer-key"),
             responses = {
                     @ApiResponse(responseCode = "204", description = "API key deleted successfully"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "API key not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "API key not found", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @DeleteMapping("/{id}")
@@ -81,8 +81,8 @@ public class ApiKeyController {
             security = @SecurityRequirement(name = "bearer-key"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "API key status updated successfully", content = @Content(schema = @Schema(implementation = ApiKeyStatusDTO.class))),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "API key not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "401", description = "Unauthorized - invalid bearer token", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "API key not found", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @PatchMapping("/{id}")

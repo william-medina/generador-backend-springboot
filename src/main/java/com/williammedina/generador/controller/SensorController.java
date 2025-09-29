@@ -3,7 +3,7 @@ package com.williammedina.generador.controller;
 import com.williammedina.generador.domain.sensor.service.SensorService;
 import com.williammedina.generador.domain.sensor.dto.SensorDTO;
 import com.williammedina.generador.domain.sensor.dto.SensorInputDTO;
-import com.williammedina.generador.infrastructure.exception.ErrorResponse;
+import com.williammedina.generador.infrastructure.exception.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,8 +30,8 @@ public class SensorController {
             description = "Stores sensors data associated with a given API key.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Sensor data saved successfully"),
-                    @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-                    @ApiResponse(responseCode = "403", description = "Invalid or inactive API key", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                    @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))),
+                    @ApiResponse(responseCode = "403", description = "Invalid or inactive API key", content = @Content(schema = @Schema(implementation = ApiErrorResponse.class)))
             }
     )
     @PostMapping("/{api_key}")

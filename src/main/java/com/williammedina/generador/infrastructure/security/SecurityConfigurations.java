@@ -1,7 +1,6 @@
 package com.williammedina.generador.infrastructure.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,12 +19,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfigurations {
+
+    private final SecurityFilter securityFilter;
 
     public static final List<PublicEndpoint> PUBLIC_ENDPOINTS = List.of(
             new PublicEndpoint("/api/auth/login", HttpMethod.POST),
@@ -38,9 +39,6 @@ public class SecurityConfigurations {
             new PublicEndpoint("/api/docs/swagger-ui/**", HttpMethod.GET),
             new PublicEndpoint("/api/v3/api-docs/**", HttpMethod.GET)
     );
-
-    @Autowired
-    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -60,8 +58,6 @@ public class SecurityConfigurations {
         return httpSecurity.build();
     }
 
-
-    // Configuración de CORS dentro de la seguridad
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
