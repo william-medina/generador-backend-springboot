@@ -34,8 +34,8 @@ public class UserController {
             }
     )
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenResponse> login(@RequestBody @Valid LoginDTO data) {
-        JwtTokenResponse responseToken = userService.login(data);
+    public ResponseEntity<JwtTokenResponse> login(@RequestBody @Valid LoginDTO request) {
+        JwtTokenResponse responseToken = userService.login(request);
         return ResponseEntity.ok(responseToken);
     }
 

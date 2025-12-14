@@ -35,8 +35,8 @@ public class RealTimeDataController {
             }
     )
     @PostMapping("/{api_key}")
-    public ResponseEntity<RealTimeDataDTO> saveRealTimeData(@RequestBody @Valid RealTimeDataInputDTO data, @PathVariable String api_key) throws IOException {
-        RealTimeDataDTO realTimeData = realTimeDataService.saveRealTimeData(data, api_key);
+    public ResponseEntity<RealTimeDataDTO> saveRealTimeData(@RequestBody @Valid RealTimeDataInputDTO request, @PathVariable String api_key) throws IOException {
+        RealTimeDataDTO realTimeData = realTimeDataService.saveRealTimeData(request, api_key);
         return ResponseEntity.status(HttpStatus.CREATED).body(realTimeData);
     }
 

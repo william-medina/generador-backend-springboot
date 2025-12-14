@@ -35,8 +35,8 @@ public class SensorController {
             }
     )
     @PostMapping("/{api_key}")
-    public ResponseEntity<SensorDTO> saveSensor(@RequestBody @Valid SensorInputDTO data, @PathVariable String api_key) {
-        SensorDTO sensor = sensorService.saveSensor(data, api_key);
+    public ResponseEntity<SensorDTO> saveSensor(@RequestBody @Valid SensorInputDTO request, @PathVariable String api_key) {
+        SensorDTO sensor = sensorService.saveSensor(request, api_key);
         return ResponseEntity.status(HttpStatus.CREATED).body(sensor);
     }
 

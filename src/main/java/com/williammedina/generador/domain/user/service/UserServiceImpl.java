@@ -3,6 +3,7 @@ package com.williammedina.generador.domain.user.service;
 import com.williammedina.generador.domain.user.dto.LoginDTO;
 import com.williammedina.generador.domain.user.dto.UserDTO;
 import com.williammedina.generador.domain.user.entity.UserEntity;
+import com.williammedina.generador.domain.user.service.context.AuthenticatedUserProvider;
 import com.williammedina.generador.infrastructure.security.JwtTokenResponse;
 import com.williammedina.generador.infrastructure.security.TokenService;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticatedUserProvider authenticatedUserProvider;
 
 
     @Override
@@ -40,20 +41,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDTO getCurrentUser() {
-        UserEntity user = getAuthenticatedUser();
-        log.debug("Retrieving user data. ID: {}", user.getId());
-        return UserDTO.fromEntity(user);
-    }
-
-    public UserEntity getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication.getPrincipal() instanceof UserEntity) {
-            return (UserEntity) authentication.getPrincipal();
-        }
-
-        log.error("Failed to retrieve a valid authenticated user");
-        throw new IllegalStateException("El usuario autenticado no es válido.");
+        UserEntity currentUser = authenticatedUserProvider.getAuthenticatedUser();
+        log.debug("Retrieving user data. ID: {}", currentUser.getId());
+        return UserDTO.fromEntity(currentUser);
     }
 
 }

@@ -38,8 +38,8 @@ public class ApiKeyController {
             }
     )
     @PostMapping
-    public ResponseEntity<ApiKeyDTO> createApiKey(@RequestBody @Valid ApiKeyInputDTO data) {
-        ApiKeyDTO apiKey = apiKeyService.createApiKey(data);
+    public ResponseEntity<ApiKeyDTO> createApiKey(@RequestBody @Valid ApiKeyInputDTO apiKeyRequest) {
+        ApiKeyDTO apiKey = apiKeyService.createApiKey(apiKeyRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(apiKey);
     }
 
