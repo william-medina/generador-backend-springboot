@@ -21,7 +21,7 @@ public class RealTimeDataServiceImpl implements RealTimeDataService{
 
     @Override
     public RealTimeDataDTO saveRealTimeData(RealTimeDataInputDTO request, String apiKey) throws IOException {
-        apiKeyValidator.validateApiKey(apiKey);
+        apiKeyValidator.ensureApiKeyIsActive(apiKey);
 
         RealTimeData existingData = repository.read();
         updateNonNullFields(existingData, request);

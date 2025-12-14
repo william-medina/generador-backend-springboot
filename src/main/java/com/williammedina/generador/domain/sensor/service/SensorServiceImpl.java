@@ -33,7 +33,7 @@ public class SensorServiceImpl implements SensorService {
     public SensorDTO saveSensor(SensorInputDTO request, String apiKey) {
         log.info("Saving new sensors data by event with provided API key");
 
-        apiKeyValidator.validateApiKey(apiKey);
+        apiKeyValidator.ensureApiKeyIsActive(apiKey);
 
         SensorEntity sensor = SensorEntity.fromInputDTO(request);
         SensorEntity savedSensor = sensorRepository.save(sensor);

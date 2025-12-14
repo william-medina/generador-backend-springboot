@@ -15,7 +15,7 @@ public class ApiKeyValidatorImpl implements ApiKeyValidator {
     private final ApiKeyRepository apiKeyRepository;
 
     @Override
-    public void validateApiKey(String apiKey) {
+    public void ensureApiKeyIsActive(String apiKey) {
         apiKeyRepository.findByKeyAndIsActive(apiKey, true)
                 .orElseThrow(() -> {
                     log.warn("API key validation failed: ending with {}", apiKey.substring(Math.max(apiKey.length() - 4, 0)));
